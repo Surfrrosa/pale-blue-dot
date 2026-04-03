@@ -62,6 +62,7 @@ window.addEventListener('resize', resize);
 // --- Boot sequence ---
 function updateBoot(time) {
   if (state.bootIndex >= state.bootLines.length) {
+    document.getElementById('boot-cursor').style.display = 'none';
     bootScreen.classList.add('fade-out');
     setTimeout(() => {
       bootScreen.classList.add('hidden');
@@ -116,6 +117,25 @@ function startPhase3(time) {
 
 audioPlayer.onPlay(() => {
   state.phase = 4;
+});
+
+audioPlayer.onEnd(() => {
+  // Fade the scene to black (canvas keeps rendering base color + CRT effects)
+  pixelRenderer.fadeToBlack();
+
+  // Hide the bottom UI
+  const bottomUI = document.getElementById('bottom-ui');
+  bottomUI.classList.remove('visible');
+  bottomUI.classList.add('hidden');
+
+  // After scene fades (~3.5s), show the end text
+  setTimeout(() => {
+    const endScreen = document.getElementById('end-screen');
+    endScreen.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      endScreen.classList.add('visible');
+    });
+  }, 3500);
 });
 
 function init() {

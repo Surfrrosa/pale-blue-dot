@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,8 +23,7 @@
 
   <!-- Boot screen -->
   <div id="boot-screen">
-    <div id="boot-text"></div>
-    <div id="boot-cursor">_</div>
+    <div id="boot-inner"><span id="boot-text"></span><span id="boot-cursor">_</span></div>
   </div>
 
   <!-- Bottom UI -->
@@ -72,6 +72,11 @@
     <div id="read-text"></div>
     <div id="read-prompt">PRESS ANY KEY TO CONTINUE</div>
     <button id="read-close" aria-label="Close">CLOSE</button>
+  </div>
+
+  <!-- End screen (fade to black + message) -->
+  <div id="end-screen" class="hidden">
+    <div id="end-text">THANKS FOR BEING HERE WITH US.</div>
   </div>
 
   <audio id="audio" preload="auto">

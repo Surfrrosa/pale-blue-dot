@@ -96,6 +96,8 @@ export class PixelRenderer {
     this.targetParallaxSpeed = 0;
     this.signOpacity = 0;
     this.signVisible = false;
+    this.fadingOut = false;
+    this.fadeOutMultiplier = 1;
   }
 
   initStars() {
@@ -284,6 +286,10 @@ export class PixelRenderer {
     this.targetParallaxSpeed = 1;
   }
 
+  fadeToBlack() {
+    this.fadingOut = true;
+  }
+
   resizeOutput() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -297,12 +303,18 @@ export class PixelRenderer {
     const cy = h / 2;
 
     // Fade values
+    if (this.fadingOut) {
+      this.fadeOutMultiplier = Math.max(0, this.fadeOutMultiplier - 0.005);
+    }
     if (this.starsOpacity > 0 && this.starsOpacity < 1) {
       this.starsOpacity = Math.min(this.starsOpacity + 0.004, 1);
     }
     if (this.nebulaOpacity > 0 && this.nebulaOpacity < 1) {
       this.nebulaOpacity = Math.min(this.nebulaOpacity + 0.003, 1);
     }
+    // Apply fade-out multiplier to all scene opacities
+    const starsAlpha = this.starsOpacity * this.fadeOutMultiplier;
+    const nebulaAlpha = this.nebulaOpacity * this.fadeOutMultiplier;
     this.parallaxSpeed += (this.targetParallaxSpeed - this.parallaxSpeed) * 0.01;
 
     // --- Deep space base ---
@@ -310,14 +322,14 @@ export class PixelRenderer {
     ctx.fillRect(0, 0, w, h);
 
     // --- Nebula background ---
-    if (this.nebulaOpacity > 0) {
-      ctx.globalAlpha = this.nebulaOpacity;
+    if (nebulaAlpha > 0) {
+      ctx.globalAlpha = nebulaAlpha;
       ctx.drawImage(this.nebulaCanvas, 0, 0);
       ctx.globalAlpha = 1;
     }
 
     // --- Stars (parallax outward from center) ---
-    if (this.starsOpacity > 0) {
+    if (starsAlpha > 0) {
       for (const layer of this.starLayers) {
         for (let i = 0; i < layer.stars.length; i++) {
           const star = layer.stars[i];
@@ -340,7 +352,7 @@ export class PixelRenderer {
 
           // Twinkle
           const twinkle = 0.5 + 0.5 * Math.sin(time * 0.001 * star.twinkleSpeed + star.twinkleOffset);
-          const alpha = star.brightness * (0.3 + twinkle * 0.7) * this.starsOpacity;
+          const alpha = star.brightness * (0.3 + twinkle * 0.7) * starsAlpha;
           if (alpha < 0.05) continue;
 
           const [r, g, b] = star.color;
@@ -351,7 +363,7 @@ export class PixelRenderer {
     }
 
     // --- Cross sparkle stars ---
-    if (this.starsOpacity > 0.3) {
+    if (starsAlpha > 0.3) {
       for (let i = 0; i < this.sparkles.length; i++) {
         const sp = this.sparkles[i];
 
@@ -374,7 +386,7 @@ export class PixelRenderer {
         }
 
         const pulse = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(time * 0.001 * sp.pulseSpeed + sp.pulseOffset));
-        const sparkleAlpha = pulse * this.starsOpacity;
+        const sparkleAlpha = pulse * starsAlpha;
 
         const px = Math.floor(sp.x);
         const py = Math.floor(sp.y);
@@ -414,7 +426,7 @@ export class PixelRenderer {
 
     // --- The Pale Blue Dot ---
     if (this.dotVisible) {
-      const dotAlpha = Math.min(this.nebulaOpacity * 1.5, 1);
+      const dotAlpha = Math.min(nebulaAlpha * 1.5, 1);
 
       // Very subtle, soft halo (just enough to distinguish from black space)
       const breathe = 0.03 + 0.02 * Math.sin(time * 0.0005); // slow, gentle
@@ -442,11 +454,15 @@ export class PixelRenderer {
           // Small downward-pointing arrow
           const arrowColor = [224, 195, 108]; // amber
           ctx.fillStyle = `rgba(${arrowColor[0]}, ${arrowColor[1]}, ${arrowColor[2]}, ${signAlpha})`;
-          // Arrow shaft (3px tall)
-          ctx.fillRect(this.dotX, arrowBaseY, 1, 3);
-          // Arrow head (3px wide)
-          ctx.fillRect(this.dotX - 1, arrowBaseY + 3, 3, 1);
-          ctx.fillRect(this.dotX, arrowBaseY + 4, 1, 1);
+          // Pixel-art block arrow pointing down
+          const ax = this.dotX;
+          const ay = arrowBaseY;
+          // Shaft (3px wide, 4px tall)
+          ctx.fillRect(ax - 1, ay, 3, 4);
+          // Arrow head (5px wide, 3px tall)
+          ctx.fillRect(ax - 2, ay + 4, 5, 1);
+          ctx.fillRect(ax - 1, ay + 5, 3, 1);
+          ctx.fillRect(ax, ay + 6, 1, 1);
 
           // "YOU ARE HERE" text above the arrow
           const textY = arrowBaseY - 7;

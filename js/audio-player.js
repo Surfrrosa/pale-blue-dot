@@ -10,6 +10,7 @@ export class AudioPlayer {
     this.playing = false;
     this.dragging = false;
     this.onPlayCallback = null;
+    this.onEndCallback = null;
 
     this.setupEvents();
   }
@@ -53,6 +54,7 @@ export class AudioPlayer {
     this.audio.addEventListener('ended', () => {
       this.playing = false;
       this.playIcon.innerHTML = '&#9654;';
+      if (this.onEndCallback) this.onEndCallback();
     });
   }
 
@@ -88,6 +90,10 @@ export class AudioPlayer {
 
   onPlay(cb) {
     this.onPlayCallback = cb;
+  }
+
+  onEnd(cb) {
+    this.onEndCallback = cb;
   }
 
   show() {
