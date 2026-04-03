@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pale Blue Dot</title>
+  <meta name="description" content="Look again at that dot.">
+  <meta name="theme-color" content="#050508">
+  <meta property="og:title" content="Pale Blue Dot">
+  <meta property="og:description" content="Look again at that dot.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <canvas id="crt-effects"></canvas>
+  <div id="scanlines"></div>
+  <div id="vignette"></div>
+
+  <!-- Boot screen -->
+  <div id="boot-screen">
+    <div id="boot-text"></div>
+    <div id="boot-cursor">_</div>
+  </div>
+
+  <!-- Bottom UI -->
+  <div id="bottom-ui" class="hidden">
+    <div id="prompt-text">LOOK AGAIN AT THAT DOT</div>
+    <div id="audio-controls">
+      <button id="play-btn" aria-label="Play">
+        <span id="play-icon">&#9654;</span>
+      </button>
+      <div id="progress-container">
+        <div id="progress-bar"></div>
+      </div>
+      <span id="time-display">00:00</span>
+      <button id="read-btn" aria-label="Read transcript">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M1 2h6v11H2a1 1 0 01-1-1V2zm8 0h6v10a1 1 0 01-1 1H9V2zM8 2v11l-1-1H3V3h4l1-1zm0 0v11l1-1h4V3H9l-1-1z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Info button (bottom right) -->
+  <button id="info-btn" class="hidden" aria-label="About">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1"/>
+      <rect x="8" y="4" width="2" height="2" fill="currentColor"/>
+      <rect x="8" y="7" width="2" height="7" fill="currentColor"/>
+    </svg>
+  </button>
+
+  <!-- About panel (slides in from right) -->
+  <div id="about-panel" class="closed">
+    <button id="about-close" aria-label="Close">&times;</button>
+    <div id="about-content">
+      <h2>Pale Blue Dot</h2>
+      <p>On February 14, 1990, the Voyager 1 spacecraft turned its camera back toward Earth from a distance of 6.06 billion kilometers. The resulting photograph captured Earth as a tiny point of light, less than a single pixel in size, suspended in a scattered ray of sunlight.</p>
+      <p>Carl Sagan, who had campaigned for the photograph to be taken, wrote about it in his 1994 book of the same name. The passage has since become one of the most widely shared reflections on our place in the cosmos.</p>
+      <p class="credit">Audio: Carl Sagan, 1994</p>
+      <p class="credit">Photograph: NASA / JPL-Caltech / Voyager 1</p>
+      <p class="credit">Built by <a href="https://shainapauley.com" target="_blank" rel="noopener">Shaina Pauley</a></p>
+    </div>
+  </div>
+
+  <!-- Read mode overlay (RPG dialogue) -->
+  <div id="read-overlay" class="hidden">
+    <div id="read-text"></div>
+    <div id="read-prompt">PRESS ANY KEY TO CONTINUE</div>
+    <button id="read-close" aria-label="Close">CLOSE</button>
+  </div>
+
+  <audio id="audio" preload="auto">
+    <source src="assets/audio/pale-blue-dot.mp3" type="audio/mpeg">
+  </audio>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

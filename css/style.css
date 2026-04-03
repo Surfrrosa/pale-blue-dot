@@ -1,0 +1,411 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #050508;
+  font-family: 'Press Start 2P', monospace;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  text-rendering: optimizeSpeed;
+  color: #c8c8c8;
+}
+
+#scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+#crt-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+}
+
+#vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.3) 70%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* --- Boot screen --- */
+#boot-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 40px;
+  background: transparent;
+  transition: opacity 1s ease;
+}
+
+#boot-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#boot-screen.hidden {
+  display: none;
+}
+
+#boot-text {
+  font-size: 10px;
+  line-height: 2.2;
+  color: #4dc9f6;
+  text-align: center;
+  white-space: pre-line;
+  text-shadow: 0 0 8px rgba(77, 201, 246, 0.6);
+}
+
+#boot-cursor {
+  display: inline;
+  color: #4dc9f6;
+  animation: blink 0.6s step-end infinite;
+  text-shadow: 0 0 8px rgba(77, 201, 246, 0.6);
+  font-size: 10px;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* --- Bottom UI --- */
+#bottom-ui {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 1.5s ease;
+}
+
+#bottom-ui.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#bottom-ui.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#prompt-text {
+  font-size: 10px;
+  color: #4dc9f6;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(77, 201, 246, 0.6);
+  animation: textPulse 4s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+#audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(5, 5, 8, 0.5);
+  border: 1px solid rgba(77, 201, 246, 0.15);
+}
+
+#play-btn,
+#read-btn {
+  background: none;
+  border: 1px solid rgba(77, 201, 246, 0.3);
+  color: #4dc9f6;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  padding: 0;
+}
+
+#play-btn {
+  width: 24px;
+  font-size: 8px;
+}
+
+#read-btn {
+  width: 24px;
+  padding: 0;
+}
+
+#play-btn:hover,
+#read-btn:hover {
+  border-color: #4dc9f6;
+  color: #fff;
+}
+
+#play-icon {
+  font-family: sans-serif;
+  font-size: 9px;
+  margin-left: 1px;
+}
+
+#progress-container {
+  width: 120px;
+  height: 3px;
+  background: rgba(77, 201, 246, 0.12);
+  cursor: pointer;
+  position: relative;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: rgba(77, 201, 246, 0.6);
+  transition: width 0.1s linear;
+}
+
+#time-display {
+  font-size: 7px;
+  color: rgba(77, 201, 246, 0.5);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* --- Info button --- */
+#info-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+  background: none;
+  border: none;
+  color: rgba(77, 201, 246, 0.4);
+  cursor: pointer;
+  transition: color 0.2s, opacity 1.5s ease;
+  padding: 4px;
+}
+
+#info-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#info-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#info-btn:hover {
+  color: #4dc9f6;
+}
+
+/* --- About panel --- */
+#about-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  max-width: 85vw;
+  height: 100%;
+  z-index: 200;
+  background: rgba(5, 5, 8, 0.92);
+  border-left: 1px solid rgba(77, 201, 246, 0.15);
+  backdrop-filter: blur(8px);
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+}
+
+#about-panel.open {
+  transform: translateX(0);
+}
+
+#about-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: rgba(77, 201, 246, 0.5);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-family: sans-serif;
+}
+
+#about-close:hover {
+  color: #4dc9f6;
+}
+
+#about-content {
+  padding: 48px 28px 28px;
+}
+
+#about-content h2 {
+  font-size: 12px;
+  color: #4dc9f6;
+  text-shadow: 0 0 8px rgba(77, 201, 246, 0.4);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+
+#about-content p {
+  font-size: 8px;
+  line-height: 2;
+  color: rgba(200, 200, 200, 0.8);
+  margin-bottom: 16px;
+}
+
+#about-content .credit {
+  font-size: 7px;
+  color: rgba(200, 200, 200, 0.4);
+  margin-bottom: 8px;
+}
+
+#about-content a {
+  color: #4dc9f6;
+  text-decoration: none;
+  text-shadow: 0 0 6px rgba(77, 201, 246, 0.3);
+}
+
+#about-content a:hover {
+  color: #fff;
+}
+
+/* --- Read overlay --- */
+#read-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 8, 0.75);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.6s ease;
+  padding: 40px;
+}
+
+#read-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#read-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#read-text {
+  max-width: 600px;
+  font-size: 9px;
+  line-height: 2.4;
+  color: #4dc9f6;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(77, 201, 246, 0.5);
+  min-height: 60px;
+}
+
+#read-prompt {
+  margin-top: 24px;
+  font-size: 7px;
+  color: rgba(77, 201, 246, 0.4);
+  animation: blink 1.2s step-end infinite;
+}
+
+#read-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid rgba(77, 201, 246, 0.3);
+  color: rgba(77, 201, 246, 0.5);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+#read-close:hover {
+  color: #4dc9f6;
+  border-color: #4dc9f6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 767px) {
+  #scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0, 0, 0, 0.06) 3px,
+      rgba(0, 0, 0, 0.06) 6px
+    );
+  }
+
+  #boot-text { font-size: 8px; }
+  #bottom-ui { bottom: 16px; }
+  #prompt-text { font-size: 8px; letter-spacing: 1px; }
+  #play-btn { width: 32px; height: 32px; }
+  #read-btn { height: 32px; font-size: 6px; }
+  #progress-container { width: 80px; }
+  #about-panel { width: 100%; max-width: 100%; }
+  #read-text { font-size: 8px; line-height: 2.2; padding: 0 16px; }
+  #read-overlay { padding: 24px; }
+}
