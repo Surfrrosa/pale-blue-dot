@@ -9,6 +9,7 @@ export class AudioPlayer {
     this.timeDisplay = document.getElementById('time-display');
     this.playing = false;
     this.dragging = false;
+    this.lastDisplayedSecond = -1;
     this.onPlayCallback = null;
     this.onEndCallback = null;
 
@@ -18,33 +19,30 @@ export class AudioPlayer {
   setupEvents() {
     this.playBtn.addEventListener('click', () => this.toggle());
 
-    // Click to seek
     this.progressContainer.addEventListener('click', (e) => {
-      this.seekFromEvent(e);
+      this.seekTo(e.clientX);
     });
 
-    // Drag to seek
     this.progressContainer.addEventListener('mousedown', (e) => {
       this.dragging = true;
-      this.seekFromEvent(e);
+      this.seekTo(e.clientX);
     });
 
     window.addEventListener('mousemove', (e) => {
-      if (this.dragging) this.seekFromEvent(e);
+      if (this.dragging) this.seekTo(e.clientX);
     });
 
     window.addEventListener('mouseup', () => {
       this.dragging = false;
     });
 
-    // Touch drag
     this.progressContainer.addEventListener('touchstart', (e) => {
       this.dragging = true;
-      this.seekFromTouch(e);
+      this.seekTo(e.touches[0].clientX);
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-      if (this.dragging) this.seekFromTouch(e);
+      if (this.dragging) this.seekTo(e.touches[0].clientX);
     }, { passive: true });
 
     window.addEventListener('touchend', () => {
@@ -58,18 +56,9 @@ export class AudioPlayer {
     });
   }
 
-  seekFromEvent(e) {
+  seekTo(clientX) {
     const rect = this.progressContainer.getBoundingClientRect();
-    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    if (this.audio.duration) {
-      this.audio.currentTime = pct * this.audio.duration;
-    }
-  }
-
-  seekFromTouch(e) {
-    const touch = e.touches[0];
-    const rect = this.progressContainer.getBoundingClientRect();
-    const pct = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
     if (this.audio.duration) {
       this.audio.currentTime = pct * this.audio.duration;
     }
@@ -108,12 +97,15 @@ export class AudioPlayer {
     this.progressBar.style.width = pct + '%';
 
     const t = Math.floor(this.audio.currentTime);
-    const m = Math.floor(t / 60);
-    const s = t % 60;
-    this.timeDisplay.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    if (t !== this.lastDisplayedSecond) {
+      this.lastDisplayedSecond = t;
+      const m = Math.floor(t / 60);
+      const s = t % 60;
+      this.timeDisplay.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
   }
 
-  getAmplitude() {
+  getSimulatedPulse() {
     if (!this.playing) return 0;
     const t = this.audio.currentTime;
     return 0.3 + 0.3 * Math.sin(t * 1.5) + 0.2 * Math.sin(t * 0.7);

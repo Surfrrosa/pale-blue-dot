@@ -5,7 +5,7 @@ export class CRTEffects {
     this.grainCanvas = document.createElement('canvas');
     this.grainCtx = this.grainCanvas.getContext('2d');
     this.lastGrainUpdate = 0;
-    this.grainInterval = 1000 / 12; // 12fps grain
+    this.grainInterval = 1000 / 12;
     this.flickerPhase = 0;
   }
 

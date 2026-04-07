@@ -1,7 +1,6 @@
 // Pixel-art space scene: nebula, sparkle stars, parallax flight toward the pale blue dot
 // Everything rendered at 320x180 for unified retro look
 
-// 3x5 pixel font for rendering text into the buffer
 const PIXEL_FONT = {
   'A': [0,1,0, 1,0,1, 1,1,1, 1,0,1, 1,0,1],
   'B': [1,1,0, 1,0,1, 1,1,0, 1,0,1, 1,1,0],
@@ -34,8 +33,9 @@ const PIXEL_FONT = {
 };
 
 function drawPixelText(ctx, text, x, y, color, alpha) {
-  const charW = 4; // 3px char + 1px gap
-  let cursorX = x - (text.length * charW) / 2; // centered
+  const charW = 4;
+  let cursorX = x - (text.length * charW) / 2;
+  ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
 
   for (const ch of text) {
     const glyph = PIXEL_FONT[ch];
@@ -44,7 +44,6 @@ function drawPixelText(ctx, text, x, y, color, alpha) {
     for (let row = 0; row < 5; row++) {
       for (let col = 0; col < 3; col++) {
         if (glyph[row * 3 + col]) {
-          ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${alpha})`;
           ctx.fillRect(cursorX + col, y + row, 1, 1);
         }
       }
@@ -302,7 +301,6 @@ export class PixelRenderer {
     const cx = w / 2;
     const cy = h / 2;
 
-    // Fade values
     if (this.fadingOut) {
       this.fadeOutMultiplier = Math.max(0, this.fadeOutMultiplier - 0.005);
     }
@@ -312,7 +310,6 @@ export class PixelRenderer {
     if (this.nebulaOpacity > 0 && this.nebulaOpacity < 1) {
       this.nebulaOpacity = Math.min(this.nebulaOpacity + 0.003, 1);
     }
-    // Apply fade-out multiplier to all scene opacities
     const starsAlpha = this.starsOpacity * this.fadeOutMultiplier;
     const nebulaAlpha = this.nebulaOpacity * this.fadeOutMultiplier;
     this.parallaxSpeed += (this.targetParallaxSpeed - this.parallaxSpeed) * 0.01;

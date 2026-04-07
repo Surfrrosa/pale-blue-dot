@@ -122,7 +122,6 @@ audioPlayer.onPlay(() => {
 });
 
 audioPlayer.onEnd(() => {
-  // Fade the scene to black (canvas keeps rendering base color + CRT effects)
   pixelRenderer.fadeToBlack();
 
   // Hide the bottom UI
@@ -158,7 +157,7 @@ function loop(time) {
   }
 
   const basePulse = 0.3 + 0.25 * Math.sin(time * 0.0008);
-  const audioPulse = state.phase === 4 ? audioPlayer.getAmplitude() * 0.4 : 0;
+  const audioPulse = state.phase === 4 ? audioPlayer.getSimulatedPulse() * 0.4 : 0;
   pixelRenderer.setDotGlow(basePulse + audioPulse);
   pixelRenderer.render(time);
 
