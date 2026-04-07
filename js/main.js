@@ -81,9 +81,11 @@ function updateBoot(time) {
       state.bootText += currentLine[state.bootCharIndex];
       state.bootCharIndex++;
     } else {
-      state.bootText += '\n';
       state.bootIndex++;
       state.bootCharIndex = 0;
+      if (state.bootIndex < state.bootLines.length) {
+        state.bootText += '\n';
+      }
     }
 
     bootTextEl.textContent = state.bootText;
