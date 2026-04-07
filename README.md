@@ -1,6 +1,6 @@
 # Pale Blue Dot
 
-An interactive pixel-art tribute to Carl Sagan's Pale Blue Dot speech and the Voyager 1 photograph.
+An interactive pixel-art tribute to Carl Sagan's Pale Blue Dot passage and the Voyager 1 photograph.
 
 **[Live site](https://palebluedot.sh)**
 
@@ -56,7 +56,7 @@ Static site. Works on Vercel, Netlify, GitHub Pages, or any static host.
 
 ## Credits
 
-- **Speech and text:** Carl Sagan, *Pale Blue Dot: A Vision of the Human Future in Space*, 1994
+- **Text and audio:** Carl Sagan, *Pale Blue Dot: A Vision of the Human Future in Space*, 1994
 - **Photograph:** NASA / JPL-Caltech / Voyager 1, February 14, 1990
 - **Built by:** [Shaina Pauley](https://shainapauley.com)
 

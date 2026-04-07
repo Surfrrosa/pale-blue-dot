@@ -2,3 +2,5 @@
 node_modules/
 .vercel/
 assets/audio/pale-blue-dot-original.mp3
+js/particles.js
+js/starfield.js
