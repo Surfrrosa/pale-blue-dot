@@ -2,7 +2,7 @@
 
 An interactive pixel-art tribute to Carl Sagan's Pale Blue Dot speech and the Voyager 1 photograph.
 
-**[Live site](https://pale-blue-dot.vercel.app)** (update URL after deploy)
+**[Live site](https://palebluedot.sh)**
 
 ## What it is
 

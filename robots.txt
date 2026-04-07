@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pale-blue-dot-ten.vercel.app/sitemap.xml
+Sitemap: https://palebluedot.sh/sitemap.xml
