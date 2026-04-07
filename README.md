@@ -20,7 +20,7 @@ Pure HTML, CSS, and vanilla JavaScript. No framework, no build step. Canvas API 
 - **CRT effects** -- scanlines (CSS), vignette (CSS), film grain and chromatic aberration (canvas)
 - **Parallax** -- 3 star layers plus sparkle stars drift outward from center
 - **Audio** -- HTML5 Audio with custom styled controls
-- **Read mode** -- RPG-style typewriter dialogue for accessibility
+- **Read mode** -- RPG-style typewriter dialogue for the speech text
 - **About panel** -- sliding panel with credits and context
 
 ## File structure
@@ -49,10 +49,6 @@ npx serve .
 ```
 
 Open http://localhost:3000.
-
-## Deploy
-
-Static site. Works on Vercel, Netlify, GitHub Pages, or any static host.
 
 ## Credits
 
