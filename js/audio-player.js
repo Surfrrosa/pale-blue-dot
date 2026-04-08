@@ -51,7 +51,7 @@ export class AudioPlayer {
 
     this.audio.addEventListener('ended', () => {
       this.playing = false;
-      this.playIcon.innerHTML = '&#9654;';
+      this.playIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><polygon points="3,1 13,8 3,15"/></svg>';
       if (this.onEndCallback) this.onEndCallback();
     });
   }
@@ -68,11 +68,11 @@ export class AudioPlayer {
     if (this.playing) {
       this.audio.pause();
       this.playing = false;
-      this.playIcon.innerHTML = '&#9654;';
+      this.playIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><polygon points="3,1 13,8 3,15"/></svg>';
     } else {
       this.audio.play();
       this.playing = true;
-      this.playIcon.innerHTML = '&#9646;&#9646;';
+      this.playIcon.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="2" y="1" width="4" height="14"/><rect x="10" y="1" width="4" height="14"/></svg>';
       if (this.onPlayCallback) this.onPlayCallback();
     }
   }
