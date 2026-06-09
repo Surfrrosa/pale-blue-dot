@@ -3,6 +3,8 @@ import { CRTEffects } from './crt-effects.js';
 import { AudioPlayer } from './audio-player.js';
 import { ReadMode } from './read-mode.js';
 
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const state = {
   phase: 0,
   phaseTime: 0,
@@ -108,7 +110,9 @@ function startPhase2(time) {
 function startPhase3(time) {
   state.phase = 3;
   state.phaseTime = time;
-  pixelRenderer.startParallax();
+  // Skip continuous parallax motion when the user has prefers-reduced-motion set.
+  // The static starfield + dot still tell the story.
+  if (!reducedMotion) pixelRenderer.startParallax();
   pixelRenderer.showSign();
   audioPlayer.show();
 
@@ -156,7 +160,8 @@ function loop(time) {
     if (time - state.phaseTime > 5000) startPhase3(time);
   }
 
-  const basePulse = 0.3 + 0.25 * Math.sin(time * 0.0008);
+  // Hold the dot at a steady glow when reduced-motion is preferred; otherwise breathe.
+  const basePulse = reducedMotion ? 0.5 : 0.3 + 0.25 * Math.sin(time * 0.0008);
   const audioPulse = state.phase === 4 ? audioPlayer.getSimulatedPulse() * 0.4 : 0;
   pixelRenderer.setDotGlow(basePulse + audioPulse);
   pixelRenderer.render(time);
