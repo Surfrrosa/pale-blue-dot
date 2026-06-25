@@ -318,6 +318,12 @@ html, body {
   margin-bottom: 8px;
 }
 
+#about-content .credit.notice {
+  margin-top: 24px;
+  line-height: 1.8;
+  color: rgba(200, 200, 200, 0.3);
+}
+
 #about-content a {
   color: #4dc9f6;
   text-decoration: none;
