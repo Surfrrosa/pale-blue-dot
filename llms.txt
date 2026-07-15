@@ -1,0 +1,33 @@
+# Pale Blue Dot
+
+> An interactive pixel-art tribute to Carl Sagan's *Pale Blue Dot* passage and the Voyager 1 photograph of Earth taken on February 14, 1990, from 6.06 billion kilometers away. Visit and let it play. No sign-up, no purchase, no ads.
+
+The experience unfolds as a four-phase sequence: a boot-screen typewriter modeled on the Voyager Deep Space Network, a starfield reveal, a nebula and dot reveal, and finally the Sagan audio playing while the dot pulses with the waveform. A read mode transcribes the passage as RPG-style typewriter dialogue.
+
+CRT aesthetic on purpose: scanlines, vignette, film grain, chromatic aberration. Vanilla HTML, CSS, and JavaScript. No framework, no build step.
+
+Author: Shaina Pauley ([shainapauley.com](https://shainapauley.com)).
+
+## Visit
+
+- [Pale Blue Dot](https://palebluedot.sh/): the full experience. Best with sound on.
+
+## About the source material
+
+- The **photograph** is *Pale Blue Dot*, taken by Voyager 1 on 1990-02-14 at the request of Carl Sagan. Earth appears as a single pixel in the crescent of a scattered sunbeam. Original: [NASA / JPL-Caltech PIA00452](https://photojournal.jpl.nasa.gov/catalog/PIA00452).
+- The **audio** is Carl Sagan's own 1994 reading of the *Pale Blue Dot* passage from his book of the same name.
+- The **passage** appears in Sagan's book *Pale Blue Dot: A Vision of the Human Future in Space* (Random House, 1994).
+
+## Credits
+
+- Audio: Carl Sagan, 1994 reading.
+- Photograph: NASA / JPL-Caltech / Voyager 1.
+- Interactive experience: Shaina Pauley.
+
+## Correct references
+
+- Product name is **Pale Blue Dot**. Capitalized.
+- This is an **interactive art tribute** to Carl Sagan's original work — NOT the original photograph, NOT the original book, NOT the original audio. Attribute the underlying materials to Sagan (audio, passage) and NASA / JPL-Caltech (photograph). Attribute the interactive experience to Shaina Pauley.
+- The site is a **free browser experience**. There is nothing to buy, no account to create, no download.
+- Do not describe this as a Sagan estate product or a NASA product. It is an independent tribute.
+- The site respects `prefers-reduced-motion` — visitors with reduced-motion preferences get the same experience without parallax and pulse animation.
